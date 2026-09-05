@@ -1,0 +1,334 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0B0F19] text-slate-100 font-sans;
+  }
+}
+
+[data-theme="light"] body {
+  background: #f8fbff;
+  color: #172033;
+}
+
+[data-theme="midnight"] body,
+[data-theme="midnight"] #root {
+  background: #071525;
+  color: #e2f1ff;
+}
+
+[data-theme="charcoal"] body,
+[data-theme="charcoal"] #root {
+  background: #17191d;
+  color: #f1f5f9;
+}
+
+[data-theme="midnight"] [class*="bg-[#0B0F19]"],
+[data-theme="midnight"] [class*="bg-[#070A10]"],
+[data-theme="midnight"] [class*="bg-[#0E131F]"],
+[data-theme="midnight"] [class*="bg-[#0A0D14]"] {
+  background-color: #0b2038 !important;
+}
+
+[data-theme="charcoal"] [class*="bg-[#0B0F19]"],
+[data-theme="charcoal"] [class*="bg-[#070A10]"],
+[data-theme="charcoal"] [class*="bg-[#0E131F]"],
+[data-theme="charcoal"] [class*="bg-[#0A0D14]"] {
+  background-color: #20242a !important;
+}
+
+[data-theme="midnight"] main {
+  background: #08192b !important;
+}
+[data-theme="charcoal"] main {
+  background: #1b1e23 !important;
+}
+
+[data-theme="midnight"] [class~="text-slate-300"],
+[data-theme="midnight"] [class~="text-slate-400"],
+[data-theme="charcoal"] [class~="text-slate-300"],
+[data-theme="charcoal"] [class~="text-slate-400"] {
+  color: #b8cce0 !important;
+}
+
+[data-theme="midnight"] [class~="text-slate-500"],
+[data-theme="charcoal"] [class~="text-slate-500"] {
+  color: #91a6bb !important;
+}
+
+[data-theme="midnight"] [class*="border-slate-800"],
+[data-theme="midnight"] [class*="border-slate-700"],
+[data-theme="charcoal"] [class*="border-slate-800"],
+[data-theme="charcoal"] [class*="border-slate-700"] {
+  border-color: #49627b !important;
+}
+
+[data-theme="midnight"] input,
+[data-theme="midnight"] select,
+[data-theme="midnight"] textarea,
+[data-theme="charcoal"] input,
+[data-theme="charcoal"] select,
+[data-theme="charcoal"] textarea {
+  color: #f8fafc !important;
+  border-color: #58718b !important;
+}
+
+[data-theme="midnight"] .group:hover > div[role="menu"],
+[data-theme="charcoal"] .group:hover > div[role="menu"] {
+  border-color: #6b8fb0 !important;
+}
+
+[data-theme="light"] #root {
+  background: #f8fbff;
+}
+
+[data-theme="light"] [class*="bg-[#0B0F19]"],
+[data-theme="light"] [class*="bg-[#070A10]"],
+[data-theme="light"] [class*="bg-[#0E131F]"],
+[data-theme="light"] [class*="bg-[#0A0D14]"],
+[data-theme="light"] [class~="bg-slate-900"],
+[data-theme="light"] [class*="bg-slate-900/"],
+[data-theme="light"] [class~="bg-slate-900/60"],
+[data-theme="light"] [class~="bg-slate-900/70"],
+[data-theme="light"] [class~="bg-slate-800/60"],
+[data-theme="light"] [class*="bg-slate-800/"] {
+  background-color: #ffffff !important;
+}
+
+[data-theme="light"] main,
+[data-theme="light"] [class*="bg-[#070A10]"],
+[data-theme="light"] [class*="bg-[#0B0F19]"] {
+  background-color: #f8fbff !important;
+}
+
+[data-theme="light"] [class*="bg-[#111827]"],
+[data-theme="light"] [class*="bg-[#141C2B]"],
+[data-theme="light"] [class*="bg-[#0E131F]"] {
+  background-color: #ffffff !important;
+}
+
+[data-theme="light"] [class~="bg-slate-800"],
+[data-theme="light"] [class~="bg-slate-700"] {
+  background-color: #edf4f8 !important;
+}
+
+[data-theme="light"] [class~="text-white"],
+[data-theme="light"] [class~="text-slate-100"],
+[data-theme="light"] [class~="text-slate-200"] {
+  color: #172033 !important;
+}
+
+[data-theme="light"] [class~="text-slate-300"] {
+  color: #40516a !important;
+}
+
+[data-theme="light"] [class~="text-slate-400"],
+[data-theme="light"] [class~="text-slate-500"] {
+  color: #60738b !important;
+}
+
+[data-theme="light"] [class~="text-slate-600"],
+[data-theme="light"] [class~="text-slate-700"] {
+  color: #334155 !important;
+}
+
+[data-theme="light"] [class~="text-gray-500"],
+[data-theme="light"] [class~="text-gray-600"] {
+  color: #475569 !important;
+}
+
+/* Dark-theme accent shades need deeper values on white surfaces. */
+[data-theme="light"] [class~="text-emerald-300"],
+[data-theme="light"] [class~="text-emerald-400"] {
+  color: #047857 !important;
+}
+
+[data-theme="light"] [class~="text-cyan-300"],
+[data-theme="light"] [class~="text-cyan-400"] {
+  color: #0e7490 !important;
+}
+
+[data-theme="light"] [class~="text-amber-300"],
+[data-theme="light"] [class~="text-amber-400"] {
+  color: #b45309 !important;
+}
+
+[data-theme="light"] [class~="text-yellow-300"],
+[data-theme="light"] [class~="text-yellow-400"] {
+  color: #a16207 !important;
+}
+
+[data-theme="light"] [class~="text-red-300"],
+[data-theme="light"] [class~="text-red-400"] {
+  color: #dc2626 !important;
+}
+
+[data-theme="light"] [class~="text-blue-300"],
+[data-theme="light"] [class~="text-blue-400"] {
+  color: #2563eb !important;
+}
+
+[data-theme="light"] [class*="bg-emerald-500/"],
+[data-theme="light"] [class*="bg-cyan-500/"],
+[data-theme="light"] [class*="bg-amber-500/"],
+[data-theme="light"] [class*="bg-yellow-500/"],
+[data-theme="light"] [class*="bg-red-500/"] {
+  border-color: currentColor;
+}
+
+[data-theme="light"] [class~="border-slate-800"],
+[data-theme="light"] [class*="border-slate-800/"],
+[data-theme="light"] [class~="border-slate-800/80"],
+[data-theme="light"] [class~="border-slate-700"],
+[data-theme="light"] [class*="border-slate-700/"] {
+  border-color: #cbd8e3 !important;
+}
+
+[data-theme="light"] .glass-panel,
+[data-theme="light"] .glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: #cbd8e3;
+  color: #172033;
+}
+
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background-color: #f8fbfd !important;
+  color: #172033 !important;
+  border-color: #b8c8d5 !important;
+}
+
+[data-theme="light"] .demo-modal {
+  background: #ffffff !important;
+  border-color: #cbd8e3 !important;
+}
+
+[data-theme="light"] .demo-modal [class*="bg-[#0E131F]"],
+[data-theme="light"] .demo-modal [class*="bg-gradient-to-r"],
+[data-theme="light"] .demo-modal [class*="bg-black/60"] {
+  background: #f1f7fb !important;
+  color: #172033 !important;
+  border-color: #cbd8e3 !important;
+}
+
+[data-theme="light"] .demo-modal [class*="bg-slate-900"] {
+  background: #f8fbff !important;
+  color: #172033 !important;
+}
+
+[data-theme="light"] .demo-modal [class~="text-white"],
+[data-theme="light"] .demo-modal [class~="text-slate-200"],
+[data-theme="light"] .demo-modal [class~="text-slate-300"] {
+  color: #172033 !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Leaflet Overrides */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #dce8f2 !important;
+  font-family: inherit;
+  isolation: isolate;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #111827 !important;
+  color: #f3f4f6 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+.leaflet-popup-tip {
+  background: #111827 !important;
+}
+
+.leaflet-tooltip {
+  background: #111827 !important;
+  color: #f3f4f6 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+.leaflet-tooltip::before {
+  border-top-color: #111827 !important;
+}
+
+.map-theme-dark .leaflet-tile-pane {
+  filter: brightness(0.72) saturate(1.15) hue-rotate(168deg);
+}
+
+.map-theme-terrain .leaflet-tile-pane {
+  filter: saturate(1.05) contrast(1.04);
+}
+
+.map-theme-3d .leaflet-tile-pane {
+}
+
+.leaflet-map-3d {
+  transform: perspective(1000px) rotateX(10deg) scale(1.08);
+  transform-origin: center bottom;
+  box-shadow: inset 0 -34px 45px rgba(6, 78, 112, 0.28);
+}
+
+.custom-div-icon {
+  background: transparent;
+  border: none;
+}
+
+.endpoint-label {
+  background: transparent !important;
+  border: 0 !important;
+  overflow: visible !important;
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite ease-in-out;
+}
