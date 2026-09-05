@@ -173,7 +173,7 @@ export default function LeafletMap({
             : mapMode === 'terrain' || mapMode === '3d'
               ? 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
               : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
-          subdomains="abcd"
+          subdomains="abc"
           maxZoom={19}
         />
 
