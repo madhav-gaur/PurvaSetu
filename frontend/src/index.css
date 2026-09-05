@@ -8,6 +8,44 @@
   }
 }
 
+.app-shell {
+  background-color: #080d17;
+  background-image:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(16, 185, 129, 0.11) 0,
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 86% 22%,
+      rgba(34, 211, 238, 0.09) 0,
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 72% 86%,
+      rgba(245, 158, 11, 0.06) 0,
+      transparent 28%
+    ),
+    linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    auto,
+    42px 42px,
+    42px 42px;
+  background-attachment: fixed;
+}
+
+.app-main-surface {
+  background-color: rgba(7, 10, 16, 0.68) !important;
+  background-image: radial-gradient(
+    circle at 45% 8%,
+    rgba(30, 64, 175, 0.07),
+    transparent 30%
+  ) !important;
+}
+
 [data-theme="light"] body {
   background: #f8fbff;
   color: #172033;
@@ -82,6 +120,37 @@
 
 [data-theme="light"] #root {
   background: #f8fbff;
+}
+
+[data-theme="light"] .app-shell {
+  background-color: #f3f8fc;
+  background-image:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(16, 185, 129, 0.08) 0,
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 86% 22%,
+      rgba(14, 116, 144, 0.07) 0,
+      transparent 24%
+    ),
+    linear-gradient(rgba(71, 85, 105, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 85, 105, 0.035) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    42px 42px,
+    42px 42px;
+}
+
+[data-theme="light"] .app-main-surface {
+  background-color: rgba(248, 251, 255, 0.76) !important;
+  background-image: radial-gradient(
+    circle at 45% 8%,
+    rgba(14, 116, 144, 0.06),
+    transparent 30%
+  ) !important;
 }
 
 [data-theme="light"] [class*="bg-[#0B0F19]"],
@@ -254,6 +323,75 @@
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theme-menu {
+  background: #f8fbff;
+  border-color: #b8cbd8;
+}
+
+.theme-menu-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  color: #40516a;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.theme-menu-item:hover {
+  background: #e2f5f7;
+  color: #0f6472;
+}
+
+.theme-menu-item-active {
+  background: #c9f0f1;
+  color: #075e6b;
+}
+
+.theme-menu-icon {
+  color: #0e8995;
+}
+
+.theme-menu-description {
+  color: #60738b;
+}
+
+.theme-menu-item-active .theme-menu-description {
+  color: #287783;
+}
+
+[data-theme="midnight"] .theme-menu,
+[data-theme="charcoal"] .theme-menu {
+  background: #111b2b;
+  border-color: #49627b;
+}
+
+[data-theme="midnight"] .theme-menu-item,
+[data-theme="charcoal"] .theme-menu-item {
+  color: #c4d8e8;
+}
+
+[data-theme="midnight"] .theme-menu-item:hover,
+[data-theme="charcoal"] .theme-menu-item:hover {
+  background: #19354a;
+  color: #e1fbff;
+}
+
+[data-theme="midnight"] .theme-menu-item-active,
+[data-theme="charcoal"] .theme-menu-item-active {
+  background: #14566a;
+  color: #d8fbff;
+}
+
+[data-theme="midnight"] .theme-menu-description,
+[data-theme="charcoal"] .theme-menu-description {
+  color: #91b3c7;
 }
 
 /* Leaflet Overrides */

@@ -9,6 +9,7 @@ import {
   X,
   Menu,
   ChevronUp,
+  MapPinned,
   Moon,
   Sun,
 } from 'lucide-react';
@@ -26,6 +27,7 @@ export default function Navbar({
   onRouteSelectionChange,
   onOpenEmergencyDemo,
   onOpenSimulation,
+  onOpenMobileNav,
   aiSource = 'FASTAPI_RANDOM_FOREST_ML',
 }) {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -93,10 +95,10 @@ export default function Navbar({
 
   return (
     <header className="sticky top-0 z-[100] w-full border-b border-slate-800/80 bg-[#0E131F]/95 px-3 py-2 shadow-lg shadow-black/20 backdrop-blur-md sm:px-4 lg:px-6">
-      <div className="flex min-h-12 w-full flex-col gap-2 py-1 lg:min-h-[128px]">
+      <div className="relative flex min-h-12 w-full items-center gap-2 py-1 lg:min-h-[128px] lg:flex-col">
         {/* BRAND */}
-        <div className="flex min-h-12 shrink-0 items-center justify-between gap-3 lg:justify-center">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 p-0.5 shadow-md shadow-emerald-950/50">
+        <div className="relative flex min-h-12 min-w-0 flex-1 shrink-0 items-center justify-between gap-3 lg:w-full lg:flex-none lg:justify-center">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 p-0.5 shadow-md shadow-emerald-950/50 lg:absolute lg:left-0">
             <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-[#0E131F]">
               <img
                 src={logoUrl}
@@ -106,9 +108,9 @@ export default function Navbar({
             </div>
           </div>
 
-          <div className="hidden min-w-0 sm:block">
+          <div className="absolute left-1/2 min-w-0 -translate-x-1/2">
             <div className="flex items-center gap-2">
-              <h1 className="whitespace-nowrap text-sm font-bold tracking-tight text-white lg:text-base">
+              <h1 className="whitespace-nowrap text-xs font-bold tracking-tight text-white sm:text-sm lg:text-base">
                 PURVASETU
               </h1>
 
@@ -122,21 +124,11 @@ export default function Navbar({
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setIsNavbarOpen((prev) => !prev)}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-600 bg-slate-800/80 text-slate-300 transition hover:border-cyan-400/50 hover:bg-slate-700 hover:text-white lg:hidden"
-            title={isNavbarOpen ? 'Collapse header controls' : 'Expand header controls'}
-            aria-label={isNavbarOpen ? 'Collapse header controls' : 'Expand header controls'}
-            aria-expanded={isNavbarOpen}
-          >
-            {isNavbarOpen ? <ChevronUp className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
         </div>
 
-        <div className="flex w-full min-w-0 flex-1 items-center gap-3">
+        <div className="flex w-auto min-w-0 flex-none items-center gap-3 lg:w-full lg:flex-1">
           {/* ROUTE SELECTOR */}
-          <div className="flex w-full min-w-0 flex-1 items-center gap-2">
+          <div className="hidden w-full min-w-0 flex-1 items-center gap-2 lg:flex">
             <div className="hidden min-w-0 flex-1 items-center lg:flex">
               <div className="flex min-w-0 w-full max-w-[620px] items-center gap-2 rounded-2xl border border-slate-700/70 bg-slate-900/50 p-1.5">
 
@@ -203,7 +195,30 @@ export default function Navbar({
           </div>
 
           {/* RIGHT ACTIONS */}
-          <div className="ml-auto flex shrink-0 items-center gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
+
+            <div className="flex items-center gap-1 lg:hidden">
+              <button
+                type="button"
+                onClick={() => setIsNavbarOpen((prev) => !prev)}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-600 bg-slate-800/80 text-slate-300 transition hover:border-cyan-400/50 hover:bg-slate-700 hover:text-white"
+                title={isNavbarOpen ? 'Hide location selector' : 'Show location selector'}
+                aria-label={isNavbarOpen ? 'Hide location selector' : 'Show location selector'}
+                aria-expanded={isNavbarOpen}
+              >
+                {isNavbarOpen ? <ChevronUp className="h-4 w-4" /> : <MapPinned className="h-4 w-4" />}
+              </button>
+
+              <button
+                type="button"
+                onClick={onOpenMobileNav}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-600 bg-slate-800/80 text-slate-300 transition hover:border-cyan-400/50 hover:bg-slate-700 hover:text-white"
+                title="Open navigation menu"
+                aria-label="Open navigation menu"
+              >
+                <Menu className="h-4 w-4" />
+              </button>
+            </div>
 
             <button
               onClick={onOpenSimulation}
@@ -229,18 +244,18 @@ export default function Navbar({
               >
                 {theme === 'light' ? <Sun className="h-4 w-4 text-amber-300" /> : <Moon className="h-4 w-4 text-cyan-300" />}
               </button>
-              <div className="invisible absolute right-0 top-full z-[120] mt-2 w-56 rounded-xl border border-slate-700 bg-[#0E131F] p-1 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100" role="menu" aria-label="Appearance themes">
+              <div className="theme-menu invisible absolute right-0 top-full z-[120] mt-2 w-56 rounded-xl border border-slate-700 bg-[#0E131F] p-1 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100" role="menu" aria-label="Appearance themes">
                 {themeOptions.map(({ id, label, description, icon: Icon }) => (
                   <button
                     key={id}
                     type="button"
                     onClick={() => onThemeChange?.(id)}
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition ${theme === id ? 'bg-cyan-500/15 text-cyan-300' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
+                    className={`theme-menu-item ${theme === id ? 'theme-menu-item-active' : ''}`}
                     role="menuitemradio"
                     aria-checked={theme === id}
                   >
-                    <Icon className="h-4 w-4 shrink-0" />
-                    <span><span className="block text-xs font-semibold">{label}</span><span className="block text-[10px] text-slate-500">{description}</span></span>
+                    <Icon className="theme-menu-icon h-4 w-4 shrink-0" />
+                    <span><span className="theme-menu-label block text-xs font-semibold">{label}</span><span className="theme-menu-description block text-[10px]">{description}</span></span>
                   </button>
                 ))}
               </div>
@@ -396,7 +411,7 @@ export default function Navbar({
         </div>
 
         {isNavbarOpen && (
-          <div className="space-y-3 rounded-2xl border border-slate-700/70 bg-slate-900/60 p-3 lg:hidden">
+          <div className="absolute left-0 right-0 top-full z-[105] space-y-3 rounded-2xl border border-slate-700/70 bg-slate-900/95 p-3 shadow-2xl lg:hidden">
             <div className="flex min-w-0 items-center gap-2">
               <select
                 aria-label="Mobile origin terminal"

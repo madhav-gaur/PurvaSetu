@@ -29,6 +29,13 @@ import {
 } from './services/api';
 import { DEFAULT_DESTINATION, DEFAULT_ORIGIN } from './constants/routeLocations';
 
+const toCollection = (value) => {
+  if (Array.isArray(value)) return value;
+  if (Array.isArray(value?.data)) return value.data;
+  if (Array.isArray(value?.content)) return value.content;
+  return [];
+};
+
 export default function App() {
   const [currentTab, setTab] = useState('dashboard');
   const [loading, setLoading] = useState(true);
@@ -59,6 +66,7 @@ export default function App() {
   const [isEmergencyDemoOpen, setIsEmergencyDemoOpen] = useState(false);
   const [isSimulationModalOpen, setIsSimulationModalOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   // Active weather location
   const [weatherLocation, setWeatherLocation] = useState({
@@ -97,12 +105,12 @@ export default function App() {
       setSummary(sumData);
       setAnalytics(anaData);
       setWeather(weaData);
-      setVehicles(vehData);
-      setShipments(shipData);
-      setReports(repData);
-      setHazards(hazData);
-      setAdvisories(advData);
-      setAlerts(altData);
+      setVehicles(toCollection(vehData));
+      setShipments(toCollection(shipData));
+      setReports(toCollection(repData));
+      setHazards(toCollection(hazData));
+      setAdvisories(toCollection(advData));
+      setAlerts(toCollection(altData));
       setRoutes(routeData);
     } catch (err) {
       console.error('Failed to load platform data', err);
@@ -190,7 +198,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="app-shell min-h-screen text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
       {/* Top Navigation */}
       <Navbar
         theme={theme}
@@ -202,6 +210,7 @@ export default function App() {
         onRouteSelectionChange={handleRouteSelectionChange}
         onOpenEmergencyDemo={() => setIsEmergencyDemoOpen(true)}
         onOpenSimulation={() => setIsSimulationModalOpen(true)}
+        onOpenMobileNav={() => setIsMobileNavOpen((prev) => !prev)}
         aiSource={routes?.recommendedRoute?.predictionSource || 'FASTAPI_RANDOM_FOREST_ML'}
       />
 
@@ -214,10 +223,12 @@ export default function App() {
           counts={sidebarCounts}
           collapsed={isSidebarCollapsed}
           onToggle={() => setIsSidebarCollapsed(prev => !prev)}
+          mobileOpen={isMobileNavOpen}
+          onMobileClose={() => setIsMobileNavOpen(false)}
         />
 
         {/* View Content Body */}
-        <main className={`flex-1 overflow-y-auto bg-[#070A10] transition-[margin] duration-200 ${isSidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
+        <main className={`app-main-surface min-w-0 flex-1 overflow-y-auto transition-[margin] duration-200 ${isSidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'}`}>
           {currentTab === 'dashboard' && (
             <DashboardView
               summary={summary}

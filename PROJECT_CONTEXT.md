@@ -546,7 +546,7 @@ The exact Java DTO definitions are the authoritative field contract. Swagger is 
 ### Authentication
 
 | Method | Endpoint | Purpose |
-|---|---|---|
+|---|---|---| Free breakfree
 | POST | `/api/auth/register` | Create a user account |
 | POST | `/api/auth/login` | Authenticate and receive an auth response/JWT |
 
