@@ -30,7 +30,7 @@ export default function Sidebar({ currentTab, setTab, counts = {}, collapsed = f
   ];
 
   return (
-    <aside className={`fixed left-0 top-24 bottom-0 z-[90] bg-[#0A0D14] border-r border-slate-800/80 flex flex-col justify-between p-3 select-none transition-[width] duration-200 ${collapsed ? 'w-16' : 'w-64'}`}>
+    <aside className={`fixed left-0 top-16 bottom-0 z-[90] bg-[#0A0D14] border-r border-slate-800/80 flex flex-col justify-between p-3 select-none transition-[width] duration-200 lg:top-36 ${collapsed ? 'w-16' : 'w-64'}`}>
       <div className="space-y-1">
         <div className={`flex items-center mb-2 ${collapsed ? 'justify-center' : 'justify-between'}`}>
           {!collapsed && (
