@@ -9,7 +9,7 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: ['http://localhost:8080', 'https://purva-setu-backend.vercel.app'],
         changeOrigin: true,
       }
     }

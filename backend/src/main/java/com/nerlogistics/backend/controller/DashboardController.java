@@ -45,6 +45,7 @@ public class DashboardController {
     @GetMapping("/shipments")
     @Operation(summary = "Get active shipments for dashboard monitoring")
     public ResponseEntity<List<ShipmentResponse>> getShipments() {
+        System.out.println( "API URL:" + import.meta.env.VITE_API_URL);
         return ResponseEntity.ok(shipmentService.getAllShipments());
     }
 
