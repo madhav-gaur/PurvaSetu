@@ -83,7 +83,7 @@ export default function Sidebar({ currentTab, setTab, counts = {}, collapsed = f
       {!collapsed && <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 text-[11px] text-slate-400 leading-relaxed">
         <div className="font-semibold text-slate-300 flex items-center gap-1 mb-1">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          NER Disaster Watch
+          PurvaSetu Disaster Watch
         </div>
         <p className="text-[10px] text-slate-400">
           Covering critical relief corridors: Guwahati, Silchar, Dibang Valley, Anjaw & Darjeeling.

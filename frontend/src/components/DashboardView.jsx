@@ -131,7 +131,7 @@ export default function DashboardView({
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <h2 className="text-sm font-bold text-white uppercase tracking-wider">
-                NER Real-Time Disaster & Routing Command Map
+                PurvaSetu Real-Time Disaster & Routing Command Map
               </h2>
             </div>
             <button

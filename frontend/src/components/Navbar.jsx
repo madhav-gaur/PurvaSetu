@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  Activity,
   Cpu,
   PlayCircle,
   Bell,
@@ -15,6 +14,7 @@ import {
 } from 'lucide-react';
 
 import { ROUTE_LOCATIONS } from '../constants/routeLocations';
+import logoUrl from '../../assets/logo.png';
 
 export default function Navbar({
   theme = 'dark',
@@ -98,14 +98,18 @@ export default function Navbar({
         <div className="flex min-h-12 shrink-0 items-center justify-between gap-3 lg:justify-center">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 p-0.5 shadow-md shadow-emerald-950/50">
             <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-[#0E131F]">
-              <Activity className="h-5 w-5 animate-pulse text-emerald-400" />
+              <img
+                src={logoUrl}
+                alt="PurvaSetu logo"
+                className="h-full w-full rounded-[9px] object-cover"
+              />
             </div>
           </div>
 
           <div className="hidden min-w-0 sm:block">
             <div className="flex items-center gap-2">
               <h1 className="whitespace-nowrap text-sm font-bold tracking-tight text-white lg:text-base">
-                NER SMART LOGISTICS
+                PURVASETU
               </h1>
 
               <span className="hidden shrink-0 rounded border border-emerald-500/30 bg-emerald-500/20 px-2 py-0.5 font-mono text-[9px] uppercase text-emerald-300 2xl:inline">

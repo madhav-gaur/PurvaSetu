@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 
 app = FastAPI(
-    title="NER Logistics AI Risk Prediction Service",
+    title="PurvaSetu AI Risk Prediction Service",
     description="Microservice providing machine learning predictions for flood, landslide, weather, and road disruption risks.",
     version="1.0.0"
 )

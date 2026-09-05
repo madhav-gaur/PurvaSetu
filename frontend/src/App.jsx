@@ -183,7 +183,7 @@ export default function App() {
       <div className="min-h-screen bg-[#0B0F19] text-white flex flex-col items-center justify-center space-y-4">
         <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
         <p className="text-sm font-semibold tracking-wide text-slate-300">
-          Connecting to NER Logistics Engine & Open-Meteo Telemetry...
+          Connecting to PurvaSetu Logistics Engine & Open-Meteo Telemetry...
         </p>
       </div>
     );
