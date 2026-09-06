@@ -23,6 +23,7 @@ export default function DashboardView({
   hazards = [],
   advisories = [],
   alerts = [],
+  routeSelection,
   lastUpdated,
   routesLoading = false,
   onAcknowledgeAlert,
@@ -164,8 +165,8 @@ export default function DashboardView({
             vehicles={vehicles}
             hazards={hazards}
             reports={reports}
-            originName={routes?.origin}
-            destinationName={routes?.destination}
+            originName={routeSelection?.origin?.name}
+            destinationName={routeSelection?.destination?.name}
             onSelectVehicle={onSelectVehicle}
             height="550px"
             loading={routesLoading}

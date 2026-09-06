@@ -304,8 +304,8 @@ export default function RouteComparisonView({
         <LeafletMap
           primaryRoute={routeA}
           alternativeRoute={routeB}
-          originName={routeData?.origin || startPoint.name}
-          destinationName={routeData?.destination || destPoint.name}
+          originName={startPoint.name}
+          destinationName={destPoint.name}
           vehicles={vehicles}
           height="500px"
         />

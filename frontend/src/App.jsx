@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import DashboardView from './components/DashboardView';
@@ -64,6 +64,8 @@ export default function App() {
     origin: DEFAULT_ORIGIN,
     destination: DEFAULT_DESTINATION,
   });
+  const routeSelectionRef = useRef(routeSelection);
+  const routeRequestRef = useRef(0);
 
   // Modals
   const [isEmergencyDemoOpen, setIsEmergencyDemoOpen] = useState(false);
@@ -80,6 +82,9 @@ export default function App() {
 
   // Fetch initial data
   const loadAllData = useCallback(async () => {
+    const requestId = ++routeRequestRef.current;
+    const selectedRoute = routeSelectionRef.current;
+    const selectedRouteKey = `${selectedRoute.origin.name}:${selectedRoute.destination.name}`;
     setRoutesLoading(true);
     try {
       const [
@@ -103,7 +108,13 @@ export default function App() {
         getHazards().catch(() => []),
         getAdvisories().catch(() => []),
         getAlerts().catch(() => []),
-        getRoutes().catch(() => null)
+        getRoutes(
+          selectedRoute.origin.lat,
+          selectedRoute.origin.lng,
+          selectedRoute.destination.lat,
+          selectedRoute.destination.lng,
+          'MEDIUM',
+        ).catch(() => null)
       ]);
 
       setSummary(sumData);
@@ -115,7 +126,11 @@ export default function App() {
       setHazards(toCollection(hazData));
       setAdvisories(toCollection(advData));
       setAlerts(toCollection(altData));
-      setRoutes(routeData);
+      const currentRoute = routeSelectionRef.current;
+      const currentRouteKey = `${currentRoute.origin.name}:${currentRoute.destination.name}`;
+      if (requestId === routeRequestRef.current && selectedRouteKey === currentRouteKey) {
+        setRoutes(routeData);
+      }
       setLastUpdated(new Date());
     } catch (err) {
       console.error('Failed to load platform data', err);
@@ -169,6 +184,8 @@ export default function App() {
   };
 
   const handleRouteSelectionChange = async (origin, destination) => {
+    const requestId = ++routeRequestRef.current;
+    routeSelectionRef.current = { origin, destination };
     setRouteSelection({ origin, destination });
     setRoutesLoading(true);
     try {
@@ -181,8 +198,10 @@ export default function App() {
         destinationName: destination.name,
         priority: 'CRITICAL',
       });
-      setRoutes(routeData);
-      setLastUpdated(new Date());
+      if (requestId === routeRequestRef.current) {
+        setRoutes(routeData);
+        setLastUpdated(new Date());
+      }
     } catch (err) {
       console.error('Failed to update global route selection', err);
     } finally {
@@ -271,6 +290,7 @@ export default function App() {
               hazards={hazards}
               advisories={advisories}
               alerts={alerts}
+              routeSelection={routeSelection}
               lastUpdated={lastUpdated}
               routesLoading={routesLoading}
               onAcknowledgeAlert={handleAcknowledgeAlert}
@@ -293,8 +313,8 @@ export default function App() {
                 vehicles={vehicles}
                 hazards={hazards}
                 reports={reports}
-                originName={routes?.origin}
-                destinationName={routes?.destination}
+                originName={routeSelection.origin.name}
+                destinationName={routeSelection.destination.name}
                 height="80vh"
               />
             </div>
