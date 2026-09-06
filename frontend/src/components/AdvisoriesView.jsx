@@ -9,6 +9,7 @@ import {
   X
 } from 'lucide-react';
 import { createAdvisory } from '../services/api';
+import CustomSelect from './CustomSelect';
 
 export default function AdvisoriesView({ advisories = [], onAdvisoriesUpdated }) {
   const [showModal, setShowModal] = useState(false);
@@ -152,29 +153,21 @@ export default function AdvisoriesView({ advisories = [], onAdvisoriesUpdated })
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-slate-400 mb-1">Advisory Classification</label>
-                  <select
+                  <CustomSelect
                     value={formData.type}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white"
-                  >
-                    <option value="ROAD_CLOSURE">ROAD_CLOSURE</option>
-                    <option value="TRAFFIC_ADVISORY">TRAFFIC_ADVISORY</option>
-                    <option value="SECURITY_ADVISORY">SECURITY_ADVISORY</option>
-                    <option value="DIVERSION">DIVERSION</option>
-                    <option value="WEATHER_ADVISORY">WEATHER_ADVISORY</option>
-                  </select>
+                    onChange={(value) => setFormData({ ...formData, type: value })}
+                    options={['ROAD_CLOSURE', 'TRAFFIC_ADVISORY', 'SECURITY_ADVISORY', 'DIVERSION', 'WEATHER_ADVISORY'].map(value => ({ value, label: value }))}
+                    ariaLabel="Advisory classification"
+                  />
                 </div>
                 <div>
                   <label className="block text-slate-400 mb-1">Severity</label>
-                  <select
+                  <CustomSelect
                     value={formData.severity}
-                    onChange={(e) => setFormData({ ...formData, severity: e.target.value })}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono"
-                  >
-                    <option value="CRITICAL">CRITICAL</option>
-                    <option value="HIGH">HIGH</option>
-                    <option value="MEDIUM">MEDIUM</option>
-                  </select>
+                    onChange={(value) => setFormData({ ...formData, severity: value })}
+                    options={['CRITICAL', 'HIGH', 'MEDIUM'].map(value => ({ value, label: value }))}
+                    ariaLabel="Advisory severity"
+                  />
                 </div>
               </div>
 

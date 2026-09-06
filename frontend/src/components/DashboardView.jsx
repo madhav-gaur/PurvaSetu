@@ -23,6 +23,8 @@ export default function DashboardView({
   hazards = [],
   advisories = [],
   alerts = [],
+  lastUpdated,
+  routesLoading = false,
   onAcknowledgeAlert,
   onSelectWeatherLocation,
   onSelectVehicle,
@@ -37,18 +39,28 @@ export default function DashboardView({
     : routes?.alternativeRoutes?.[0];
 
   return (
-    <div className="p-6 space-y-6 max-w-[1700px] mx-auto">
+    <div className="mx-auto max-w-[1700px] space-y-5 p-4 sm:p-6">
+      <div className="flex flex-wrap items-end justify-between gap-2 border-b border-slate-800/80 pb-3">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400">Operations overview</p>
+          <h2 className="mt-1 text-base font-bold text-white sm:text-lg">Regional Logistics Command</h2>
+        </div>
+        <p className="text-[10px] font-medium text-slate-500 sm:text-xs">
+          Last updated: {lastUpdated ? lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Loading'}
+        </p>
+      </div>
+
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
         {/* Active Vehicles */}
-        <div className="p-4 rounded-2xl bg-[#0E131F]/90 border border-slate-800/90 shadow-lg hover:border-slate-700 transition">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
+        <div className="rounded-xl border border-cyan-500/20 bg-[#0E131F]/90 p-3 shadow-lg transition hover:border-cyan-400/40 sm:p-4">
+          <div className="mb-1.5 flex items-center justify-between text-slate-400">
             <span className="text-xs font-semibold">Active Fleet</span>
-            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
+            <div className="rounded-lg bg-cyan-500/10 p-1.5 text-cyan-400">
               <Truck className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-extrabold text-white">
+          <div className="text-xl font-extrabold text-cyan-100 sm:text-2xl">
             {summary.activeVehiclesCount ?? vehicles.length}
           </div>
           <div className="text-[10px] text-emerald-400 font-medium flex items-center gap-1 mt-1">
@@ -58,14 +70,14 @@ export default function DashboardView({
         </div>
 
         {/* Active Shipments */}
-        <div className="p-4 rounded-2xl bg-[#0E131F]/90 border border-slate-800/90 shadow-lg hover:border-slate-700 transition">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
+        <div className="rounded-xl border border-cyan-500/20 bg-[#0E131F]/90 p-3 shadow-lg transition hover:border-cyan-400/40 sm:p-4">
+          <div className="mb-1.5 flex items-center justify-between text-slate-400">
             <span className="text-xs font-semibold">Consignments</span>
-            <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400">
+            <div className="rounded-lg bg-cyan-500/10 p-1.5 text-cyan-400">
               <Package className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-extrabold text-white">
+          <div className="text-xl font-extrabold text-cyan-100 sm:text-2xl">
             {summary.activeShipmentsCount ?? 4}
           </div>
           <div className="text-[10px] text-amber-400 font-medium flex items-center gap-1 mt-1">
@@ -75,14 +87,14 @@ export default function DashboardView({
         </div>
 
         {/* High Risk Routes */}
-        <div className="p-4 rounded-2xl bg-[#0E131F]/90 border border-slate-800/90 shadow-lg hover:border-slate-700 transition">
+        <div className="rounded-xl border border-amber-500/25 bg-[#0E131F]/90 p-3 shadow-lg transition hover:border-amber-400/50 sm:p-4">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-xs font-semibold">High Hazard Routes</span>
-            <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
+            <div className="rounded-lg bg-amber-500/10 p-1.5 text-amber-400">
               <AlertTriangle className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-extrabold text-amber-300">
+          <div className="text-xl font-extrabold text-amber-300 sm:text-2xl">
             {summary.highRiskRoutesCount ?? 2}
           </div>
           <div className="text-[10px] text-amber-400 font-medium flex items-center gap-1 mt-1">
@@ -91,14 +103,14 @@ export default function DashboardView({
         </div>
 
         {/* Blocked Corridors */}
-        <div className="p-4 rounded-2xl bg-[#0E131F]/90 border border-slate-800/90 shadow-lg hover:border-slate-700 transition">
+        <div className="rounded-xl border border-red-500/25 bg-[#0E131F]/90 p-3 shadow-lg transition hover:border-red-400/50 sm:p-4">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-xs font-semibold">Passage Blockages</span>
-            <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400">
+            <div className="rounded-lg bg-red-500/10 p-1.5 text-red-400">
               <Ban className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-extrabold text-rose-300">
+          <div className="text-xl font-extrabold text-red-300 sm:text-2xl">
             {summary.blockedRoadsCount ?? 1}
           </div>
           <div className="text-[10px] text-rose-400 font-medium flex items-center gap-1 mt-1">
@@ -107,14 +119,14 @@ export default function DashboardView({
         </div>
 
         {/* Critical Alerts */}
-        <div className="p-4 rounded-2xl bg-[#0E131F]/90 border border-slate-800/90 shadow-lg hover:border-slate-700 transition">
+        <div className="rounded-xl border border-red-500/35 bg-[#0E131F]/90 p-3 shadow-lg transition hover:border-red-400/60 sm:p-4">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-xs font-semibold">Critical Notices</span>
-            <div className="p-2 rounded-xl bg-red-500/10 text-red-400">
+            <div className="rounded-lg bg-red-500/10 p-1.5 text-red-400">
               <BellRing className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-extrabold text-red-400">
+          <div className="text-xl font-extrabold text-red-400 sm:text-2xl">
             {summary.criticalAlertsCount ?? alerts.length}
           </div>
           <div className="text-[10px] text-red-400 font-medium flex items-center gap-1 mt-1">
@@ -127,20 +139,23 @@ export default function DashboardView({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Large Map Visualizer (2 Cols) */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-cyan-500/25 bg-slate-900/40 px-3 py-2.5">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <h2 className="text-sm font-bold text-white uppercase tracking-wider">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-white sm:text-sm">
                 PurvaSetu Real-Time Disaster & Routing Command Map
               </h2>
             </div>
-            <button
-              onClick={onViewRoutesTab}
-              className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20"
-            >
-              <span>Explore Multi-Route Risk Engine</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
+            <div className="flex items-center gap-2">
+              {routesLoading && <span className="flex items-center gap-1.5 text-[10px] font-semibold text-cyan-300"><span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />Updating route</span>}
+              <button
+                onClick={onViewRoutesTab}
+                className="flex items-center gap-1 rounded-lg border border-cyan-500/25 bg-cyan-500/10 px-2.5 py-1.5 text-[10px] font-semibold text-cyan-300 hover:bg-cyan-500/20 sm:text-xs"
+              >
+                <span>Explore Multi-Route Risk Engine</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
 
           <LeafletMap
@@ -153,6 +168,7 @@ export default function DashboardView({
             destinationName={routes?.destination}
             onSelectVehicle={onSelectVehicle}
             height="550px"
+            loading={routesLoading}
           />
         </div>
 

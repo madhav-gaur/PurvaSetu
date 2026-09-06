@@ -104,7 +104,8 @@ export default function LeafletMap({
   onSelectVehicle,
   originName = 'Guwahati Logistics Hub',
   destinationName = 'Silchar Medical Hub',
-  height = "600px"
+  height = "600px",
+  loading = false
 }) {
   const [mapMode, setMapMode] = useState('normal');
 
@@ -127,8 +128,8 @@ export default function LeafletMap({
   if (mapMode === '3d') {
     return (
       <div
-        className="relative w-full overflow-hidden rounded-2xl border border-cyan-900/70 bg-[#0B0F19] shadow-2xl"
-        style={{ height }}
+        className="relative h-[360px] w-full overflow-hidden rounded-2xl border border-cyan-900/70 bg-[#0B0F19] shadow-2xl sm:h-[450px] lg:h-[550px]"
+        style={height !== '550px' ? { height } : undefined}
         role="region"
         aria-label="Interactive Mapbox 3D terrain map"
       >
@@ -140,6 +141,14 @@ export default function LeafletMap({
           height={height}
           onModeChange={setMapMode}
         />
+        {loading && (
+          <div className="absolute inset-0 z-[15] flex items-center justify-center bg-slate-950/35 backdrop-blur-[1px]" role="status" aria-live="polite">
+            <div className="flex items-center gap-2 rounded-xl border border-cyan-400/30 bg-slate-950/90 px-3 py-2 text-xs font-semibold text-cyan-100 shadow-xl">
+              <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-cyan-400" />
+              Updating route intelligence...
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -149,8 +158,8 @@ export default function LeafletMap({
 
   return (
     <div
-      className={`relative w-full rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#0B0F19] ${mapMode === 'dark' ? 'map-theme-dark' : ''} ${mapMode === 'terrain' ? 'map-theme-terrain' : ''} ${mapMode === '3d' ? 'map-theme-3d' : ''}`}
-      style={{ height }}
+      className={`relative h-[360px] w-full overflow-hidden rounded-2xl border border-slate-800 bg-[#0B0F19] shadow-2xl sm:h-[450px] lg:h-[550px] ${mapMode === 'dark' ? 'map-theme-dark' : ''} ${mapMode === 'terrain' ? 'map-theme-terrain' : ''} ${mapMode === '3d' ? 'map-theme-3d' : ''}`}
+      style={height !== '550px' ? { height } : undefined}
       role="region"
       aria-label="Interactive North Eastern Region disaster and logistics map"
     >
@@ -337,7 +346,7 @@ export default function LeafletMap({
         })}
       </MapContainer>
 
-      <div className="absolute top-4 right-4 z-10 flex items-center gap-1 rounded-xl bg-slate-900/95 backdrop-blur-md border border-slate-700 p-1 shadow-xl" role="group" aria-label="Map display mode">
+      <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1 rounded-xl border border-cyan-400/25 bg-slate-950/95 p-1 shadow-xl backdrop-blur-md sm:bottom-auto sm:top-4 sm:right-4" role="group" aria-label="Map display mode">
         <button
           type="button"
           onClick={() => setMapMode('normal')}
@@ -387,9 +396,10 @@ export default function LeafletMap({
       )}
 
       {/* Map Legend Overlay */}
-      <div className="absolute bottom-4 right-4 z-10 bg-slate-900/90 backdrop-blur-md p-3 rounded-xl border border-slate-700 text-xs shadow-xl space-y-2 pointer-events-auto">
-        <div className="font-bold text-slate-300 text-[11px] uppercase tracking-wider mb-1">
-          Map Intelligence Legend
+      <div className="absolute bottom-3 left-3 z-10 max-w-[calc(100%-6rem)] space-y-1.5 rounded-xl border border-cyan-400/25 bg-slate-950/90 p-2.5 text-[10px] shadow-xl backdrop-blur-md sm:bottom-4 sm:left-auto sm:right-4 sm:max-w-none sm:space-y-2 sm:p-3 sm:text-xs">
+        <div className="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-cyan-200 sm:text-[11px]">
+          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+          Map Intelligence
         </div>
         <div className="flex items-center gap-2">
           <span className="w-4 h-1.5 rounded-full bg-red-500"></span>
@@ -412,6 +422,15 @@ export default function LeafletMap({
           <span className="text-slate-300">Flood Inundation</span>
         </div>
       </div>
+
+      {loading && (
+        <div className="absolute inset-0 z-[15] flex items-center justify-center bg-slate-950/35 backdrop-blur-[1px]" role="status" aria-live="polite">
+          <div className="flex items-center gap-2 rounded-xl border border-cyan-400/30 bg-slate-950/90 px-3 py-2 text-xs font-semibold text-cyan-100 shadow-xl">
+            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-cyan-400" />
+            Updating route intelligence...
+          </div>
+        </div>
+      )}
     </div>
   );
 }

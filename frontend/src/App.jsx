@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import DashboardView from './components/DashboardView';
@@ -12,6 +12,7 @@ import AdvisoriesView from './components/AdvisoriesView';
 import AnalyticsView from './components/AnalyticsView';
 import SimulationPanel from './components/SimulationPanel';
 import EmergencyDemoModal from './components/EmergencyDemoModal';
+import { GlassCard } from 'react-glass-ui';
 
 import {
   getDashboardSummary,
@@ -51,6 +52,8 @@ export default function App() {
   const [analytics, setAnalytics] = useState({});
   const [weather, setWeather] = useState(null);
   const [routes, setRoutes] = useState(null);
+  const [routesLoading, setRoutesLoading] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
   const [vehicles, setVehicles] = useState([]);
   const [shipments, setShipments] = useState([]);
   const [reports, setReports] = useState([]);
@@ -77,6 +80,7 @@ export default function App() {
 
   // Fetch initial data
   const loadAllData = useCallback(async () => {
+    setRoutesLoading(true);
     try {
       const [
         sumData,
@@ -112,14 +116,17 @@ export default function App() {
       setAdvisories(toCollection(advData));
       setAlerts(toCollection(altData));
       setRoutes(routeData);
+      setLastUpdated(new Date());
     } catch (err) {
       console.error('Failed to load platform data', err);
     } finally {
+      setRoutesLoading(false);
       setLoading(false);
     }
   }, [weatherLocation]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadAllData();
     // Poll updates every 15 seconds
     const interval = setInterval(loadAllData, 15000);
@@ -163,6 +170,7 @@ export default function App() {
 
   const handleRouteSelectionChange = async (origin, destination) => {
     setRouteSelection({ origin, destination });
+    setRoutesLoading(true);
     try {
       const routeData = await calculateRoutes({
         startLatitude: origin.lat,
@@ -174,8 +182,11 @@ export default function App() {
         priority: 'CRITICAL',
       });
       setRoutes(routeData);
+      setLastUpdated(new Date());
     } catch (err) {
       console.error('Failed to update global route selection', err);
+    } finally {
+      setRoutesLoading(false);
     }
   };
 
@@ -198,7 +209,28 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell min-h-screen text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="app-shell relative isolate min-h-screen text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+      {theme === 'fluid-glass' && (
+        <GlassCard
+          className="fluid-glass-layer"
+          width={1600}
+          height={1000}
+          blur={2}
+          distortion={24}
+          chromaticAberration={8}
+          brightness={92}
+          saturation={118}
+          borderRadius={0}
+          borderSize={0}
+          backgroundColor="#0b2230"
+          backgroundOpacity={0.2}
+          innerLightColor="#67e8f9"
+          innerLightOpacity={0.18}
+          outerLightColor="#14b8a6"
+          outerLightOpacity={0.12}
+          avoidSvgCreation={false}
+        />
+      )}
       {/* Top Navigation */}
       <Navbar
         theme={theme}
@@ -228,7 +260,7 @@ export default function App() {
         />
 
         {/* View Content Body */}
-        <main className={`app-main-surface min-w-0 flex-1 overflow-y-auto transition-[margin] duration-200 ${isSidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'}`}>
+        <main className={`app-main-surface relative z-10 min-w-0 flex-1 overflow-y-auto transition-[margin] duration-200 ${isSidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'}`}>
           {currentTab === 'dashboard' && (
             <DashboardView
               summary={summary}
@@ -239,6 +271,8 @@ export default function App() {
               hazards={hazards}
               advisories={advisories}
               alerts={alerts}
+              lastUpdated={lastUpdated}
+              routesLoading={routesLoading}
               onAcknowledgeAlert={handleAcknowledgeAlert}
               onSelectWeatherLocation={handleSelectWeatherLocation}
               onViewRoutesTab={() => setTab('routes')}

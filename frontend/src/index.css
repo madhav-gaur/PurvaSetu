@@ -63,6 +63,54 @@
   color: #f1f5f9;
 }
 
+[data-theme="fluid-glass"] body,
+[data-theme="fluid-glass"] #root {
+  background: #07121c;
+  color: #e6fbff;
+}
+
+[data-theme="fluid-glass"] .app-shell {
+  background-color: #07121c;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 12% 0%, rgba(34, 211, 238, 0.2), transparent 70%),
+    radial-gradient(ellipse 60% 65% at 100% 28%, rgba(20, 184, 166, 0.16), transparent 72%),
+    radial-gradient(ellipse 72% 55% at 48% 110%, rgba(59, 130, 246, 0.13), transparent 76%),
+    linear-gradient(120deg, rgba(8, 47, 73, 0.46), rgba(6, 78, 59, 0.2));
+}
+
+[data-theme="fluid-glass"] .app-main-surface {
+  background-color: rgba(7, 18, 28, 0.34) !important;
+  background-image: radial-gradient(circle at 48% 4%, rgba(103, 232, 249, 0.1), transparent 34%) !important;
+}
+
+[data-theme="fluid-glass"] .fluid-glass-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}
+
+[data-theme="fluid-glass"] .fluid-glass-layer > * {
+  pointer-events: none !important;
+}
+
+[data-theme="fluid-glass"] header,
+[data-theme="fluid-glass"] aside {
+  background-color: rgba(8, 25, 38, 0.7) !important;
+  border-color: rgba(103, 232, 249, 0.2) !important;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+[data-theme="fluid-glass"] .glass-panel,
+[data-theme="fluid-glass"] .glass-card {
+  background: rgba(15, 50, 68, 0.58);
+  border-color: rgba(103, 232, 249, 0.18);
+  box-shadow: 0 18px 50px rgba(2, 12, 22, 0.2);
+}
+
 [data-theme="midnight"] [class*="bg-[#0B0F19]"],
 [data-theme="midnight"] [class*="bg-[#070A10]"],
 [data-theme="midnight"] [class*="bg-[#0E131F]"],
@@ -326,8 +374,8 @@
 }
 
 .theme-menu {
-  background: #f8fbff;
-  border-color: #b8cbd8;
+  background: #0e131f;
+  border-color: #334155;
 }
 
 .theme-menu-item {
@@ -338,20 +386,20 @@
   border-radius: 0.5rem;
   padding: 0.5rem 0.75rem;
   text-align: left;
-  color: #40516a;
+  color: #cbd5e1;
   transition:
     background-color 150ms ease,
     color 150ms ease;
 }
 
 .theme-menu-item:hover {
-  background: #e2f5f7;
-  color: #0f6472;
+  background: #163244;
+  color: #e1fbff;
 }
 
 .theme-menu-item-active {
-  background: #c9f0f1;
-  color: #075e6b;
+  background: #14566a;
+  color: #d8fbff;
 }
 
 .theme-menu-icon {
@@ -359,39 +407,71 @@
 }
 
 .theme-menu-description {
-  color: #60738b;
+  color: #91b3c7;
 }
 
 .theme-menu-item-active .theme-menu-description {
   color: #287783;
 }
 
-[data-theme="midnight"] .theme-menu,
-[data-theme="charcoal"] .theme-menu {
-  background: #111b2b;
-  border-color: #49627b;
+[data-theme="light"] .theme-menu {
+  background: #f8fbff;
+  border-color: #b8cbd8;
 }
 
-[data-theme="midnight"] .theme-menu-item,
-[data-theme="charcoal"] .theme-menu-item {
-  color: #c4d8e8;
+[data-theme="light"] .theme-menu-item {
+  color: #40516a;
 }
 
-[data-theme="midnight"] .theme-menu-item:hover,
-[data-theme="charcoal"] .theme-menu-item:hover {
-  background: #19354a;
-  color: #e1fbff;
+[data-theme="light"] .theme-menu-item:hover {
+  background: #e2f5f7;
+  color: #0f6472;
 }
 
-[data-theme="midnight"] .theme-menu-item-active,
-[data-theme="charcoal"] .theme-menu-item-active {
-  background: #14566a;
-  color: #d8fbff;
+[data-theme="light"] .theme-menu-item-active {
+  background: #c9f0f1;
+  color: #075e6b;
 }
 
-[data-theme="midnight"] .theme-menu-description,
-[data-theme="charcoal"] .theme-menu-description {
-  color: #91b3c7;
+[data-theme="light"] .theme-menu-description {
+  color: #60738b;
+}
+
+.fluid-glass-surface {
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(20px) saturate(135%);
+}
+
+[data-theme="fluid-glass"] .fluid-glass-surface,
+[data-theme="fluid-glass"] [role="dialog"],
+[data-theme="fluid-glass"] [role="listbox"] {
+  background: rgba(8, 25, 38, 0.94) !important;
+  border-color: rgba(103, 232, 249, 0.28) !important;
+  box-shadow: 0 20px 60px rgba(2, 12, 22, 0.42), inset 0 1px 0 rgba(224, 251, 255, 0.16);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  backdrop-filter: blur(22px) saturate(145%);
+}
+
+[data-theme="fluid-glass"] .fluid-glass-menu {
+  background: linear-gradient(145deg, rgba(8, 32, 47, 0.98), rgba(6, 22, 34, 0.96)) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  backdrop-filter: blur(24px) saturate(145%);
+}
+
+[data-theme="fluid-glass"] .fluid-glass-menu .theme-menu-item:hover,
+[data-theme="fluid-glass"] .fluid-glass-menu [role="option"]:hover {
+  background: rgba(34, 211, 238, 0.2) !important;
+}
+
+[data-theme="fluid-glass"] .fluid-glass-menu .theme-menu-item-active,
+[data-theme="fluid-glass"] .fluid-glass-menu [aria-selected="true"] {
+  background: rgba(34, 211, 238, 0.28) !important;
+  color: #dffcff !important;
+}
+
+[data-theme="fluid-glass"] [role="dialog"] [class*="bg-slate-900"],
+[data-theme="fluid-glass"] [role="listbox"] [class*="bg-slate-900"] {
+  background: rgba(8, 25, 38, 0.42) !important;
 }
 
 /* Leaflet Overrides */

@@ -12,6 +12,7 @@ import {
   Zap
 } from 'lucide-react';
 import LeafletMap from './LeafletMap';
+import CustomSelect from './CustomSelect';
 import { calculateRoutes, rerouteShipment } from '../services/api';
 import { DEFAULT_DESTINATION, DEFAULT_ORIGIN, ROUTE_LOCATIONS } from '../constants/routeLocations';
 
@@ -114,56 +115,48 @@ export default function RouteComparisonView({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-400 mb-1.5">Origin Terminal</label>
-            <select
+            <CustomSelect
               value={startPoint.name}
-              onChange={(e) => {
-                const loc = ROUTE_LOCATIONS.find(l => l.name === e.target.value);
+              onChange={(value) => {
+                const loc = ROUTE_LOCATIONS.find(l => l.name === value);
                 if (loc) {
                   setStartPoint(loc);
                   onRouteSelectionChange?.(loc, destPoint);
                 }
               }}
-              className="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 font-medium"
-            >
-              {ROUTE_LOCATIONS.map(l => (
-                <option key={l.name} value={l.name}>{l.name}</option>
-              ))}
-            </select>
+              options={ROUTE_LOCATIONS.map(l => ({ value: l.name, label: l.name }))}
+            />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-400 mb-1.5">Destination Terminal</label>
-            <select
+            <CustomSelect
               value={destPoint.name}
-              onChange={(e) => {
-                const loc = ROUTE_LOCATIONS.find(l => l.name === e.target.value);
+              onChange={(value) => {
+                const loc = ROUTE_LOCATIONS.find(l => l.name === value);
                 if (loc) {
                   setDestPoint(loc);
                   onRouteSelectionChange?.(startPoint, loc);
                 }
               }}
-              className="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 font-medium"
-            >
-              {ROUTE_LOCATIONS.map(l => (
-                <option key={l.name} value={l.name}>{l.name}</option>
-              ))}
-            </select>
+              options={ROUTE_LOCATIONS.filter(l => l.name !== startPoint.name).map(l => ({ value: l.name, label: l.name }))}
+            />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-400 mb-1.5">
               Consignment Priority (Safety Weight Factor)
             </label>
-            <select
+            <CustomSelect
               value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500 font-medium font-mono"
-            >
-              <option value="CRITICAL">CRITICAL (Medical / Vaccines - Safety 3.5x Weight)</option>
-              <option value="HIGH">HIGH (Relief Grain / Fuel - Safety 2.2x Weight)</option>
-              <option value="MEDIUM">MEDIUM (Commercial Cargo - Balanced)</option>
-              <option value="LOW">LOW (Non-Urgent Bulk - Distance Prioritized)</option>
-            </select>
+              onChange={setPriority}
+              options={[
+                { value: 'CRITICAL', label: 'CRITICAL (Medical / Vaccines - Safety 3.5x Weight)' },
+                { value: 'HIGH', label: 'HIGH (Relief Grain / Fuel - Safety 2.2x Weight)' },
+                { value: 'MEDIUM', label: 'MEDIUM (Commercial Cargo - Balanced)' },
+                { value: 'LOW', label: 'LOW (Non-Urgent Bulk - Distance Prioritized)' },
+              ]}
+            />
           </div>
         </div>
       </div>
@@ -187,8 +180,8 @@ export default function RouteComparisonView({
               </h3>
             </div>
             <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${(routeA?.riskScore || 0.78) > 0.6
-                ? 'bg-red-500/20 text-red-300 border-red-500/40'
-                : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+              ? 'bg-red-500/20 text-red-300 border-red-500/40'
+              : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
               }`}>
               {Math.round((routeA?.riskScore || 0.78) * 100)}% RISK ({(routeA?.riskScore || 0.78) > 0.6 ? 'HIGH RISK' : 'SAFE'})
             </span>

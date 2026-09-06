@@ -1,13 +1,14 @@
 import React from 'react';
-import { 
-  CloudRain, 
-  Wind, 
-  Droplets, 
-  Thermometer, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Compass 
+import {
+  CloudRain,
+  Wind,
+  Droplets,
+  Thermometer,
+  AlertTriangle,
+  CheckCircle2,
+  Compass
 } from 'lucide-react';
+import CustomSelect from './CustomSelect';
 
 export default function WeatherWidget({ weather, onSelectLocation, selectedLocationName }) {
   if (!weather) {
@@ -49,20 +50,18 @@ export default function WeatherWidget({ weather, onSelectLocation, selectedLocat
         </div>
 
         {/* Location Dropdown */}
-        <select
+        <CustomSelect
           value={weather.locationName || selectedLocationName}
-          onChange={(e) => {
-            const loc = locations.find(l => l.name === e.target.value);
+          onChange={(value) => {
+            const loc = locations.find(l => l.name === value);
             if (loc && onSelectLocation) {
               onSelectLocation(loc.lat, loc.lon, loc.name);
             }
           }}
-          className="bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-1.5 text-slate-200 focus:outline-none focus:border-cyan-500 font-medium"
-        >
-          {locations.map(l => (
-            <option key={l.name} value={l.name}>{l.name}</option>
-          ))}
-        </select>
+          options={locations.map(l => ({ value: l.name, label: l.name }))}
+          ariaLabel="Weather location"
+          className="w-full sm:w-64"
+        />
       </div>
 
       {/* Main Temperature & Weather Condition Grid */}
@@ -129,10 +128,9 @@ export default function WeatherWidget({ weather, onSelectLocation, selectedLocat
           </span>
         </div>
         <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-          <div 
-            className={`h-full transition-all duration-500 ${
-              weather.floodRisk > 0.6 ? 'bg-gradient-to-r from-amber-500 to-red-500' : 'bg-emerald-500'
-            }`}
+          <div
+            className={`h-full transition-all duration-500 ${weather.floodRisk > 0.6 ? 'bg-gradient-to-r from-amber-500 to-red-500' : 'bg-emerald-500'
+              }`}
             style={{ width: `${Math.min(100, (weather.floodRisk || 0) * 100)}%` }}
           />
         </div>
@@ -144,10 +142,9 @@ export default function WeatherWidget({ weather, onSelectLocation, selectedLocat
           </span>
         </div>
         <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-          <div 
-            className={`h-full transition-all duration-500 ${
-              weather.landslideRisk > 0.6 ? 'bg-gradient-to-r from-amber-500 to-red-500' : 'bg-emerald-500'
-            }`}
+          <div
+            className={`h-full transition-all duration-500 ${weather.landslideRisk > 0.6 ? 'bg-gradient-to-r from-amber-500 to-red-500' : 'bg-emerald-500'
+              }`}
             style={{ width: `${Math.min(100, (weather.landslideRisk || 0) * 100)}%` }}
           />
         </div>

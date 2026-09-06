@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 import { ROUTE_LOCATIONS } from '../constants/routeLocations';
+import CustomSelect from './CustomSelect';
 import logoUrl from '../../assets/logo.png';
 
 export default function Navbar({
@@ -69,13 +70,16 @@ export default function Navbar({
   const themeOptions = [
     { id: 'light', label: 'Light', description: 'Bright workspace', icon: Sun },
     { id: 'dark', label: 'Dark', description: 'Default dark workspace', icon: Moon },
+    { id: 'fluid-glass', label: 'Fluid Glass', description: 'Soft translucent cyan glass', icon: Sparkles },
     { id: 'midnight', label: 'Midnight Blue', description: 'Deep blue contrast', icon: Moon },
-    { id: 'charcoal', label: 'Graphite', description: 'Neutral dark contrast', icon: Moon },
   ];
 
-  const handleOriginChange = (event) => {
+  const locationOptions = ROUTE_LOCATIONS.map((location) => ({ value: location.name, label: location.name }));
+  const destinationOptions = locationOptions.filter((option) => option.value !== origin.name);
+
+  const handleOriginChange = (value) => {
     const selectedOrigin = ROUTE_LOCATIONS.find(
-      (location) => location.name === event.target.value
+      (location) => location.name === value
     );
 
     if (selectedOrigin && onRouteSelectionChange) {
@@ -83,9 +87,9 @@ export default function Navbar({
     }
   };
 
-  const handleDestinationChange = (event) => {
+  const handleDestinationChange = (value) => {
     const selectedDestination = ROUTE_LOCATIONS.find(
-      (location) => location.name === event.target.value
+      (location) => location.name === value
     );
 
     if (selectedDestination && onRouteSelectionChange) {
@@ -132,41 +136,25 @@ export default function Navbar({
             <div className="hidden min-w-0 flex-1 items-center lg:flex">
               <div className="flex min-w-0 w-full max-w-[620px] items-center gap-2 rounded-2xl border border-slate-700/70 bg-slate-900/50 p-1.5">
 
-                <select
+                <CustomSelect
                   aria-label="Global origin terminal"
                   value={origin?.name || ''}
                   onChange={handleOriginChange}
-                  className="min-w-0 flex-1 truncate rounded-xl border border-slate-700 bg-[#141C2B] px-3 py-2.5 text-[11px] text-slate-200 outline-none focus:border-emerald-500"
-                >
-                  {ROUTE_LOCATIONS.map((location) => (
-                    <option
-                      key={location.name}
-                      value={location.name}
-                    >
-                      {location.name}
-                    </option>
-                  ))}
-                </select>
+                  options={locationOptions}
+                  className="flex-1"
+                />
 
                 <span className="shrink-0 px-1 text-xs text-slate-500">
                   →
                 </span>
 
-                <select
+                <CustomSelect
                   aria-label="Global destination terminal"
                   value={destination?.name || ''}
                   onChange={handleDestinationChange}
-                  className="min-w-0 flex-1 truncate rounded-xl border border-slate-700 bg-[#141C2B] px-3 py-2.5 text-[11px] text-slate-200 outline-none focus:border-cyan-500"
-                >
-                  {ROUTE_LOCATIONS.map((location) => (
-                    <option
-                      key={location.name}
-                      value={location.name}
-                    >
-                      {location.name}
-                    </option>
-                  ))}
-                </select>
+                  options={destinationOptions}
+                  className="flex-1"
+                />
               </div>
             </div>
           </div>
@@ -244,7 +232,7 @@ export default function Navbar({
               >
                 {theme === 'light' ? <Sun className="h-4 w-4 text-amber-300" /> : <Moon className="h-4 w-4 text-cyan-300" />}
               </button>
-              <div className="theme-menu invisible absolute right-0 top-full z-[120] mt-2 w-56 rounded-xl border border-slate-700 bg-[#0E131F] p-1 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100" role="menu" aria-label="Appearance themes">
+              <div className="theme-menu fluid-glass-surface fluid-glass-menu invisible absolute right-0 top-full z-[120] mt-2 w-56 rounded-xl border border-slate-700 bg-[#0E131F] p-1 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100" role="menu" aria-label="Appearance themes">
                 {themeOptions.map(({ id, label, description, icon: Icon }) => (
                   <button
                     key={id}
@@ -305,7 +293,7 @@ export default function Navbar({
 
               {isNotificationsOpen && (
                 <div
-                  className="absolute right-0 top-full z-[110] mt-2 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-slate-700 bg-[#0E131F] shadow-2xl shadow-black/50"
+                  className="fluid-glass-surface fluid-glass-menu absolute right-0 top-full z-[110] mt-2 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-slate-700 bg-[#0E131F] shadow-2xl shadow-black/50"
                   role="dialog"
                   aria-label="Active notifications"
                 >
@@ -413,33 +401,23 @@ export default function Navbar({
         {isNavbarOpen && (
           <div className="absolute left-0 right-0 top-full z-[105] space-y-3 rounded-2xl border border-slate-700/70 bg-slate-900/95 p-3 shadow-2xl lg:hidden">
             <div className="flex min-w-0 items-center gap-2">
-              <select
+              <CustomSelect
                 aria-label="Mobile origin terminal"
                 value={origin?.name || ''}
                 onChange={handleOriginChange}
-                className="min-w-0 flex-1 truncate rounded-xl border border-slate-700 bg-[#141C2B] px-3 py-2.5 text-[11px] text-slate-200 outline-none focus:border-emerald-500"
-              >
-                {ROUTE_LOCATIONS.map((location) => (
-                  <option key={location.name} value={location.name}>
-                    {location.name}
-                  </option>
-                ))}
-              </select>
+                options={locationOptions}
+                className="flex-1"
+              />
 
               <span className="shrink-0 text-xs text-slate-500">→</span>
 
-              <select
+              <CustomSelect
                 aria-label="Mobile destination terminal"
                 value={destination?.name || ''}
                 onChange={handleDestinationChange}
-                className="min-w-0 flex-1 truncate rounded-xl border border-slate-700 bg-[#141C2B] px-3 py-2.5 text-[11px] text-slate-200 outline-none focus:border-cyan-500"
-              >
-                {ROUTE_LOCATIONS.map((location) => (
-                  <option key={location.name} value={location.name}>
-                    {location.name}
-                  </option>
-                ))}
-              </select>
+                options={destinationOptions}
+                className="flex-1"
+              />
             </div>
 
             <div className="flex items-center justify-between gap-2">
